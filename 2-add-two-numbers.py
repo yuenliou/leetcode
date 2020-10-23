@@ -1,20 +1,53 @@
 #!/usr/local/bin/python3.7
 # -*- coding: utf-8 -*-
-from typing import List
+from datatype.list_node import ListNode
 
-def twoSum(nums: List[int], target: int) -> List[int]:
-    hashtable = dict()
-    for i, num in enumerate(nums):
-        if target - num in hashtable:
-            return [hashtable[target - num], i]
-        hashtable[nums[i]] = i
-    return []
+
+def addTwoNumbers(l1: ListNode, l2: ListNode) -> ListNode:
+    pre = ListNode(0)
+    cur = pre
+
+    carry = 0
+    while l1 or l2 or carry:
+        x =  l1.val if l1 else 0
+        y =  l2.val if l2 else 0
+        sum = x + y + carry
+
+        cur.next = ListNode(sum % 10)
+        cur = cur.next
+
+        if l1: l1 = l1.next
+        if l2: l2 = l2.next
+
+        # 牛逼2 // -> if
+        # carry = sum // 10
+        carry =  1 if sum > 9 else 0
+
+    # 牛逼1 or carry
+    # if carry: cur.next = ListNode(carry)
+
+    return pre.next
+
 
 def main():
-    nums = [2, 7, 11, 15]
-    target = 9
-    ret = twoSum(nums, target)
-    print(ret)
+    node1 = ListNode(2)
+    node2 = ListNode(4)
+    node1.next = node2
+    node3 = ListNode(3)
+    node2.next = node3
+    l1 = node1
+
+    node1 = ListNode(5)
+    node2 = ListNode(6)
+    node1.next = node2
+    node3 = ListNode(4)
+    node2.next = node3
+    l2 = node1
+
+    ret = addTwoNumbers(l1, l2)
+    while(ret):
+        print(ret.val)
+        ret = ret.next
 
 
 '''2. 两数相加
@@ -29,6 +62,10 @@ def main():
 输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
 输出：7 -> 0 -> 8
 原因：342 + 465 = 807
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/add-two-numbers
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 '''
 if __name__ == '__main__':
     main()
