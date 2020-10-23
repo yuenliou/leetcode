@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+**.py[c|o|d]
+**.sw*
+
+.DS_Store
+#pycharm
+.idea*
+
+# Distribution / packaging
+.Python
+env/
+build/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# PyBuilder
+target/
+.venv/
+tags
+test
+/logs
+nohup*
+
+
