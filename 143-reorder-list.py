@@ -93,7 +93,7 @@ def main():
         curNode = curNode.next
     print(curNode.val)
 
-    reorderList_byNoodles(head)
+    reorderList(head)
     print('----------')
 
     while(head):
