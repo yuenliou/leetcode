@@ -81,14 +81,30 @@ def isPalindrome_iter(head: ListNode) -> bool:
         head = head.next
     return vals == vals[::-1]
 
+def isPalindrome_xxx(head):
+    # 数学方法：不通用，存在溢出问题和数据类型非int
+    # 反例： 输入：[10, 111, 0, 20] 输出：true 预期结果：false
+    s1 = 0
+    s2 = 0
+    t = 1
+
+    while head != None:
+        s1 = s1 * 10 + head.val
+        s2 = s2 + t * head.val
+        print(s1, s2)
+        t = t * 10
+        head = head.next
+
+    return s1 == s2
+
 def main():
     node1 = ListNode(1)
     node2 = ListNode(2)
     node1.next = node2
-    node3 = ListNode(1)
+    node3 = ListNode(2)
     node2.next = node3
-    # node4 = ListNode(1)
-    # node3.next = node4
+    node4 = ListNode(1)
+    node3.next = node4
     ret = isPalindrome(node1)
     print(ret)
 
