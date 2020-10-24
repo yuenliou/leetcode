@@ -2,18 +2,35 @@
 # -*- coding: utf-8 -*-
 
 def isPalindrome(x: int) -> bool:
+    # 考虑性能，特殊情况优先处理(这一行可以不用加)
+    if x < 0 or (x % 10 == 0 and x != 0):
+        return False
+    num = 0
+    while x > num:# 直接判断一半就可以
+        num = num * 10 + x % 10
+        x //= 10
+    return x == num or x == num // 10
+
+def isPalindrome_v1(x: int) -> bool:
+    """
+    PS：会存在翻转溢出的问题
+    :param x:
+    :return:
+    """
     y = x
     num = 0
-    while(x > 0):
+    while (x > 0):
         mod = x % 10
         x //= 10
         num *= 10
         num += mod
-
     return num == y
 
+def isPalindrome_str(x: int) -> bool:
+    return str(x) == str(x)[::-1]
+
 def main():
-    num = 121
+    num = 12321
     ret = isPalindrome(num)
     print(ret)
 
