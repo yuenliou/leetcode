@@ -7,6 +7,14 @@ class ListNode:
         self.val = val
         self.next = next
 
+# Definition for double-linked list.
+class DoubleListNode:
+    def __init__(self, val=0, prev=None, next=None):
+        self.val = val
+        self.prev = prev
+        self.next = next
+
+
 class MyListNode:
 
     def __init__(self, head=None):
@@ -81,7 +89,7 @@ class MyListNode:
 
     def length(self) -> int:
         """
-        返回链表长度
+        链表长度
         :return:
         """
         len = 0
@@ -124,18 +132,22 @@ def list_node_test():
     my_list_node.clear()
     print(my_list_node.length())
 
-if __name__ == '__main__':
-    list_node_test()
 
-# Definition for double-linked list.
-class DoubleListNode:
-    def __init__(self, val=0, prev=None, next=None):
-        self.val = val
-        self.prev = prev
-        self.next = next
+class MyDoubleListNode:
+
+    def __init__(self, size=0, head=None, tail=None):
+        self.size = 0
+        self.head = head
+        self.tail = head
 
     def get(self, index: int):
-        pass
+        i = 0
+        list_node = self.head
+        while list_node and i < index:
+            list_node = list_node.next
+            i += 1
+        if list_node: return list_node.val
+        return -1
 
     def addAtHead(self, val: int):
         pass
@@ -156,21 +168,8 @@ class DoubleListNode:
         pass
 
 def double_list_node_test():
-    my_list_node = DoubleListNode()
+    pass
 
-    my_list_node.addAtHead(1)
-    my_list_node.addAtTail(3)
-    my_list_node.addAtHead(4)
-    my_list_node.addAtHead(5)
-    my_list_node.addAtIndex(1, 2)
-
-    for i in range(my_list_node.length()):
-        print(my_list_node.get(i))
-
-    my_list_node.deleteAtIndex(1)
-
-    for i in range(my_list_node.length()):
-        print(my_list_node.get(i))
-
-    my_list_node.clear()
-    print(my_list_node.length())
+if __name__ == '__main__':
+    list_node_test()
+    double_list_node_test()
