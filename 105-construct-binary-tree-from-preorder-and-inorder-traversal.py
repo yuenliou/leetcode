@@ -4,14 +4,27 @@ from typing import List
 from datatype.tree_node import TreeNode, pre_order_travel, in_order_travel, post_order_travel
 
 def buildTree(preorder: List[int], inorder: List[int]) -> TreeNode:
+
+    def build(preorder_left, preorder_right, inorder_left, inorder_right) -> TreeNode:
+        if (preorder_left > preorder_right): return None
+
+        pass
+
+    n = len(preorder)
+    # 构造哈希映射，帮助我们快速定位根节点
+    index = {element: i for i, element in enumerate(inorder)}
+    return build(0, n - 1, 0, n - 1)
+
+
+def buildTree_recur(preorder: List[int], inorder: List[int]) -> TreeNode:
     if (len(preorder) <= 0): return None
     #先序中的第一个元素是根节点
     rootVal = preorder[0]
     idx = inorder.index(rootVal)
     # 构建左右子树
     root = TreeNode(rootVal)
-    root.left = buildTree(preorder[1:idx+1], inorder[0:idx]) #0省略
-    root.right = buildTree(preorder[idx+1:len(preorder)], inorder[idx+1:len(inorder)]) #len省略
+    root.left = buildTree_recur(preorder[1:idx+1], inorder[0:idx]) #0省略
+    root.right = buildTree_recur(preorder[idx+1:len(preorder)], inorder[idx+1:len(inorder)]) #len省略
     return root
 
 def main():
