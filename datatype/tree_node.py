@@ -49,6 +49,40 @@ def build_bst(arr):
         return root
     return build(0, len(arr) - 1)
 
+def build_bst2(arr):
+    """上述构建二叉搜索树限制：必须是有序数组"""
+    def build(start, end):
+        if start > end: return None
+        pivotIndex = partition(arr, start, start, end)
+        root = TreeNode(arr[pivotIndex])
+        root.left = build(start, pivotIndex - 1)
+        root.right = build(pivotIndex + 1, end)
+        return root
+    return build(0, len(arr) - 1)
+
+def partition(arr, pivot, left, right):
+    """双指针分区：应用快速排序，构建二叉搜索树，在 O(n) 的时间复杂度内求无序数组的第k大元素"""
+    i = left
+    j = right
+    pivotVal = arr[pivot]
+    #左右指针相遇的时候退出扫描循环
+    while i < j:
+        #思考：为什么是右指针先扫而不是左指针先扫呢，大家自己想想吧哈哈，模拟一下就知道了
+        while i < j and arr[j] >= pivotVal:
+            j -= 1  # 从右向左找第一个小于x的数
+        # if (i < j):
+        # 	arr[i] = arr[j];i += 1
+        while i < j and arr[i] <= pivotVal:
+            i += 1 # 从左向右找第一个大于x的数
+        # if (i < j):
+        # 	arr[j] = arr[i];j -= 1
+        # 交换左右指针所停位置的数
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    # 最后交换基准数与指针相遇位置的数：只有先进行右指针的运动，才可以保证在相遇处的数字小于基准数
+    [arr[pivot], arr[i]] = [arr[i], arr[pivot]];
+    # arr[i] = pivotVal
+    return i
+
 def pre_order_travel(node: TreeNode):
     """先序遍历"""
     if node is None: return
@@ -74,16 +108,20 @@ def tree_node_test():
     pass
 
 if __name__ == '__main__':
-    # root = build_bst([-10, -3, 0, 5, 9])
-    # in_order_travel(root)
     # root = build_bst([1, 3, 2])
     # in_order_travel(root)
 
-    root = TreeNode(1)
-    n2 = TreeNode(2)
-    n3 = TreeNode(3)
-    root.setRightNode(n2)
-    n2.setLeftNode(n3)
+    # root = build_bst([-10, -3, 0, 5, 9])
+    # post_order_travel(root)
+    # root = build_bst2([-10, -3, 0, 5, 9])
+    root = build_bst2([0, 5, 9, -3, -10])
     in_order_travel(root)
+
+    # root = TreeNode(1)
+    # n2 = TreeNode(2)
+    # n3 = TreeNode(3)
+    # root.setRightNode(n2)
+    # n2.setLeftNode(n3)
+    # in_order_travel(root)
 
 
