@@ -4,7 +4,8 @@ import collections
 from typing import List
 from datatype.tree_node import TreeNode
 # 同比任务队列：大才小用了哈哈
-# from multiprocessing import Queue, SimpleQueue, LifoQueue, PriorityQueue
+from multiprocessing import Queue, SimpleQueue
+from queue import Queue, SimpleQueue, LifoQueue, PriorityQueue
 
 def levelOrder(root: TreeNode) -> List[List[int]]:
     """dfs：有level占位，先序中序后续结果都一样"""
