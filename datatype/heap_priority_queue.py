@@ -124,6 +124,10 @@ class HeapPriorityQueue(PriorityQueueBase):
 
 
 if __name__ == '__main__':
+    """
+    1. 常用的建堆方法主要用于堆元素已经确定(n/2...0)好的情况，而插入建堆的过程主要用于动态的增加元素来建堆。
+    2. 插入建堆的过程也常用于建立优先队列的应用。这些可以根据具体的时间情况来选取。
+    """
     heap = HeapPriorityQueue()
     heap.add(4, "D")
     heap.add(3, "C")
