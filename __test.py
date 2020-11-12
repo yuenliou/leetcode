@@ -4,6 +4,7 @@ import re,time,datetime,os,os.path,sys,shutil,pickle,math,random,itertools,funct
 import subprocess,signal,threading,multiprocessing
 import socket,requests,urllib,django
 from queue import Queue, SimpleQueue, LifoQueue, PriorityQueue
+#实际上，Python没有独立的堆类型，而只有一个包含一些堆操作函数的模块
 import heapq
 
 def comprehension():
