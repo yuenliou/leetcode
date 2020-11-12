@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3.7
 # -*- coding: utf-8 -*-
 from typing import List
+import heapq
 
 def findKthLargest(nums: List[int], k: int) -> int:
     def partition(arr, left, right):
@@ -36,10 +37,49 @@ def findKthLargest(nums: List[int], k: int) -> int:
 
     return findKthBase(0, len(nums)-1)
 
+def findKthLargest_v2(nums: List[int], k: int) -> int:
+    """
+    思路1：把 len 个元素都放入一个最小堆中，然后再 pop() 出 len - k 个元素，此时最小堆只剩下 k 个元素，堆顶元素就是数组中的第 k 个最大元素。
+    思路2：把 len 个元素都放入一个最大堆中，然后再 pop() 出 k - 1 个元素，因为前 k - 1 大的元素都被弹出了，此时最大堆的堆顶元素就是数组中的第 k 个最大元素。
+    优化思路：
+    思路 3：只用 k 个容量的优先队列，而不用全部 len 个容量。
+    思路 4：用 k + 1 个容量的优先队列，使得上面的过程更“连贯”一些，到了 k 个以后的元素，就进来一个，出去一个，让优先队列自己去维护大小关系。
+    思路 5：综合考虑以上两种情况，总之都是为了节约空间复杂度。即 k 较小的时候使用最小堆，k 较大的时候使用最大堆。
+    https://leetcode-cn.com/problems/kth-largest-element-in-an-array/solution/partitionfen-er-zhi-zhi-you-xian-dui-lie-java-dai-/
+    """
+    heap = []
+    # heapq.heapify(nums)
+    for i in range(len(nums)): #思路1
+        heapq.heappush(heap, nums[i])
+    for _ in range(len(nums)-k):
+        heapq.heappop(heap)
+    return heap[0]
+
+def findKthLargest_v3(nums: List[int], k: int) -> int:
+    heap = []
+    for i in range(k): #思路3
+        heapq.heappush(heap, nums[i])
+
+    for index in range(k, len(nums)):
+        top = heap[0]
+        if nums[index] > top:
+            # 看一看堆顶的元素，只要比堆顶元素大，就替换堆顶元素
+            heapq.heapreplace(heap, nums[index])
+    # 最后堆顶中的元素就是堆中最小的，整个数组中的第 k 大元素
+    return heap[0]
+
+def findKthLargest_v4(nums: List[int], k: int) -> int:
+    length = len(nums)
+    # list = heapq.nlargest(length, nums) #list[k-1]
+    # list = heapq.nsmallest(length, nums) #list[length - k]
+    list = heapq.nlargest(k, nums) #k在最后一位
+    # list = heapq.nsmallest(length - k + 1, nums) #k在最后一位
+    return list.pop()
+
 def main():
-    # param = [3,2,1,5,6,4]
-    # param = [3,2,3,1,2,4,5,5,6]
-    param = [3,7,5,2,1,8] #7
+    # param = [3,2,1,5,6,4] #5,k=2
+    # param = [3,2,3,1,2,4,5,5,6] #4,k=4
+    param = [3,7,5,2,1,8] #7,k=2
     ret = findKthLargest(param, 2)
     print(ret)
 

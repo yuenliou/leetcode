@@ -3,7 +3,8 @@
 import re,time,datetime,os,os.path,sys,shutil,pickle,math,random,itertools,functools,sqlite3
 import subprocess,signal,threading,multiprocessing
 import socket,requests,urllib,django
-
+from queue import Queue, SimpleQueue, LifoQueue, PriorityQueue
+import heapq
 
 def comprehension():
     """
