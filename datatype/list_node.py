@@ -69,15 +69,20 @@ class MyListNode:
         删除索引为index的节点
         """
         if index == 0 and self.head:
+            del_node = self.head
             self.head = self.head.next
+            del del_node
             return
         i = 0
         list_node = self.head
         while list_node and i < index - 1:
             list_node = list_node.next
             i += 1
-        if not (list_node and list_node.next): return
-        list_node.next = list_node.next.next
+        if not list_node: return
+        if list_node.next:
+            del_node = list_node.next
+            list_node.next = del_node.next
+            del del_node
 
     def length(self) -> int:
         """
@@ -95,7 +100,12 @@ class MyListNode:
         """
         清空链表
         """
-        self.head = None
+        # self.head = None
+        del_node = None
+        while self.head:
+            del_node = self.head
+            self.head = self.head.next
+            del del_node
 
 def list_node_test():
     my_list_node = MyListNode()
@@ -116,13 +126,13 @@ def list_node_test():
 
     my_list_node.deleteAtIndex(2)
 
-    print(my_list_node.length())
+    print('length:', my_list_node.length())
 
     for i in range(my_list_node.length()):
         print(my_list_node.get(i))
 
     my_list_node.clear()
-    print(my_list_node.length())
+    print('length:', my_list_node.length())
 
 if __name__ == '__main__':
     list_node_test()
