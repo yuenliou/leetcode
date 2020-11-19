@@ -6,6 +6,15 @@ import socket,requests,urllib,django
 from queue import Queue, SimpleQueue, LifoQueue, PriorityQueue
 #实际上，Python没有独立的堆类型，而只有一个包含一些堆操作函数的模块
 import heapq
+#提供Python标准内建容器 dict , list , set , 和 tuple 的替代选择
+#https://docs.python.org/zh-cn/3.7/library/collections.html
+from collections import ChainMap, namedtuple, deque, Counter, OrderedDict, defaultdict, UserDict, UserList, UserString
+
+def timestamp():
+    print(int(time.time()))
+    print(int(time.time() * 1000))
+    print(int(time.time() * 1000 ** 2))
+    print(time.time_ns())
 
 def comprehension():
     """
