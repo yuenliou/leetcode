@@ -15,6 +15,18 @@ def deleteDuplicates(head: ListNode) -> ListNode:
             ptr = ptr.next
     return head
 
+def deleteDuplicates_skill(head: ListNode) -> ListNode:
+    """skill解法：重点已排序，哑结点"""
+    dummy = ListNode(0)
+    dummy.next = head
+    ptr = dummy
+    while ptr.next and ptr.next.next:
+        if ptr.next.val == ptr.next.next.val:
+            ptr.next = ptr.next.next
+        else:
+            ptr = ptr.next
+    return dummy.next
+
 def deleteDuplicates_naive(head: ListNode) -> ListNode:
     """朴素解法：hash表"""
     #创建一个空集合必须用 set() 而不是 { }，因为 { } 是用来创建一个空字典
