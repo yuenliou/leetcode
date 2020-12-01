@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3.7
 # -*- coding: utf-8 -*-
 from typing import List
+from collections import deque
 
 def exchange(nums: List[int]) -> List[int]:
     length = len(nums)
@@ -15,12 +16,20 @@ def exchange(nums: List[int]) -> List[int]:
             nums[head], nums[tail] = nums[tail], nums[head]
     return nums
 
+def exchange_deque(nums: List[int]) -> List[int]:
+    #双端队列
+    tmp = deque()
+    for num in nums:
+        tmp.appendleft(num) if num % 2 ==1 else tmp.append(num)
+    return list(tmp)
+
 def main():
     """
     思路1.从头开始迭代，找到一个偶数(i)挪到尾部，移动len-i个元素
-    思路2.前后双指针，一遍遍历
+    思路2.前后双指针，一遍遍历(或者快慢指针效果不太好)
+    思路3.O(n)空间复杂度
     """
-    param = [1, 3, 5]
+    param = [1, 2, 3, 4, 5]
     ret = exchange(param)
     print(ret)
 
