@@ -14,7 +14,40 @@ def mergeTwoLists(l1: ListNode, l2: ListNode) -> ListNode:
         l2.next = mergeTwoLists(l1, l2.next)
         return l2
 
+def mergeTwoLists1(l1: ListNode, l2: ListNode) -> ListNode:
+    """拓展思路：递归实现"""
+    dummyNode = ListNode(0)
+    result = dummyNode
+    while l1 and l2:
+        if l1.val > l2.val:
+            result.next = l2
+            l2 = l2.next
+        else:
+            result.next = l1
+            l1 = l1.next
+        result = result.next
+
+    # 合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可
+    result.next = l1 if l1 is not None else l2
+
+    # while l1:
+    #     result.next = l1
+    #     l1 = l1.next
+    #     result = result.next
+    #
+    # while l2:
+    #     result.next = l2
+    #     l2 = l2.next
+    #     result = result.next
+
+    return dummyNode.next
+
+
 def main():
+    """
+    思路1.类似于归并排序的merge函数
+    思路2.递归不常用
+    """
     my_list_node = MyListNode()
     my_list_node.addAtTail(1)
     my_list_node.addAtTail(2)
