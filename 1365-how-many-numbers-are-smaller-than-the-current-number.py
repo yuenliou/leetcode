@@ -16,7 +16,7 @@ def smallerNumbersThanCurrent(nums: List[int]) -> List[int]:
                 count[i] += 1
     return count
 
-def smallerNumbersThanCurrent0(nums: List[int]) -> List[int]:
+def smallerNumbersThanCurrent1(nums: List[int]) -> List[int]:
     """
     排序与映射：排序之后，其实每一个数值的下标就代表这前面有几个比它小的了。
     https://leetcode-cn.com/problems/how-many-numbers-are-smaller-than-the-current-number/solution/1365-you-duo-shao-xiao-yu-dang-qian-shu-zi-de-s-35/    """
@@ -37,28 +37,11 @@ def smallerNumbersThanCurrent0(nums: List[int]) -> List[int]:
 
     return count
 
-def smallerNumbersThanCurrent1(nums: List[int]) -> List[int]:
+def smallerNumbersThanCurrent2(nums: List[int]) -> List[int]:
     """
-    排序与映射：你的索引是多少，就有多少个数字小于你[严格说应该是 小于等于你]
+    计数排序
     https://leetcode-cn.com/problems/how-many-numbers-are-smaller-than-the-current-number/solution/java-pai-xu-yu-ying-she-by-lzhlyle/385413/
     """
-    length = len(nums)
-    if length <= 0: return []
-
-    map = {}
-    for i, n in enumerate(nums):
-        map[n] = i
-
-    nums2 = sorted(nums)
-
-    count = [0] * length
-    for i in range(length-1, -1, -1):
-        if i - 1 >= 0 and nums2[i] == nums2[i - 1]: continue
-        for j in range(map[nums2[i]]): count[j] = i
-    return count
-
-def smallerNumbersThanCurrent2(nums: List[int]) -> List[int]:
-    """计数排序"""
     length = len(nums)
     if length <= 0: return []
 
