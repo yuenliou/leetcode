@@ -3,6 +3,16 @@
 from typing import List
 
 def twoSum(nums: List[int], target: int) -> List[int]:
+    """枚举:n*n"""
+    n = len(nums)
+    for i in range(0, n):
+        for j in range(i+1, n):
+            if nums[i] + nums[j] == target:
+                return [i ,j]
+    return []
+
+def twoSum1(nums: List[int], target: int) -> List[int]:
+    """map优化:n时间+n空间"""
     hashtable = dict()
     for i, num in enumerate(nums):
         if target - num in hashtable:
