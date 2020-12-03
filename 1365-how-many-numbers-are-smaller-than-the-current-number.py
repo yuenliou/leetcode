@@ -16,7 +16,7 @@ def smallerNumbersThanCurrent(nums: List[int]) -> List[int]:
                 count[i] += 1
     return count
 
-def smallerNumbersThanCurrent1(nums: List[int]) -> List[int]:
+def smallerNumbersThanCurrent0(nums: List[int]) -> List[int]:
     """
     排序与映射：排序之后，其实每一个数值的下标就代表这前面有几个比它小的了。
     https://leetcode-cn.com/problems/how-many-numbers-are-smaller-than-the-current-number/solution/1365-you-duo-shao-xiao-yu-dang-qian-shu-zi-de-s-35/    """
@@ -26,15 +26,70 @@ def smallerNumbersThanCurrent1(nums: List[int]) -> List[int]:
     #排序
     nums2 = sorted(nums)
 
-    #hash
+    #逆序哈希(相同元素取最左面的数值和下标)
     map = {}
-    for i in range(length - 1, -1, -1): #逆序哈希
+    for i in range(length - 1, -1, -1):
         map[nums2[i]] = i
 
     count = [0] * length
     for i in range(length):
         count[i] = map[nums[i]]
 
+    return count
+
+def smallerNumbersThanCurrent01(nums: List[int]) -> List[int]:
+    """
+    快速排序:官方，索引下标就是目标答案的个数，关键维护好索引与数组的关系
+    我们也可以将数组排序，并记录每一个数在原数组中的位置。对于排序后的数组中的每一个数，我们找出其左侧第一个小于它的数，这样就能够知道数组中小于该数的数量。
+    https://leetcode-cn.com/problems/how-many-numbers-are-smaller-than-the-current-number/solution/you-duo-shao-xiao-yu-dang-qian-shu-zi-de-shu-zi--2/
+    """
+    length = len(nums)
+    if length <= 0: return []
+
+    # data = [[0] * 2] * 5 # array是同一个引用
+    # data = [[0 for i in range(2)] for j in range(5)]
+    data = [[0, 0] for _ in range(length)]
+
+    #下面会对二维数组排序
+    for i in range(length):
+        data[i][0] = nums[i]
+        data[i][1] = i
+    #print(data)
+
+    # data.sort() 等价下面写法
+    data.sort(key=lambda x:x[0], reverse=False)
+    #print(data)
+
+    prev = -1
+    count = [0] * length
+    for i in range(length):
+        if prev == -1 or data[i][0] != data[i - 1][0]:
+            prev = i
+        count[data[i][1]] = prev
+    return count
+
+def smallerNumbersThanCurrent1(nums: List[int]) -> List[int]:
+    """
+    排序与映射：你的索引是多少，就有多少个数字小于你[严格说应该是 小于等于你]
+    https://leetcode-cn.com/problems/how-many-numbers-are-smaller-than-the-current-number/solution/java-pai-xu-yu-ying-she-by-lzhlyle/385413/
+    """
+    length = len(nums)
+    if length <= 0: return []
+
+    map = {}# int -> set
+    for i, n in enumerate(nums):
+        if n not in map:
+            map[n] = set()
+        map[n].add(i)
+
+    nums2 = sorted(nums)
+
+    count = [0] * length
+    for i in range(length-1, -1, -1):
+        # 倒序，方便处理同值的情况,此行为补充优化：前面还有同值的，那就跳过这次，等下次再一并赋值
+        if i - 1 >= 0 and nums2[i] == nums2[i - 1]: continue
+        # 同值的所有索引都更新
+        for j in map[nums2[i]]: count[j] = i
     return count
 
 def smallerNumbersThanCurrent2(nums: List[int]) -> List[int]:
@@ -67,8 +122,8 @@ def smallerNumbersThanCurrent2(nums: List[int]) -> List[int]:
 def main():
     param = [8,1,2,2,3]
     # param = [6,5,4,8]
-    # param = [7,7,7,7]
-    ret = smallerNumbersThanCurrent0(param)
+    # param = [7,6,7,7]
+    ret = smallerNumbersThanCurrent01(param)
     print(ret)
 
 '''1365. 有多少小于当前数字的数字
