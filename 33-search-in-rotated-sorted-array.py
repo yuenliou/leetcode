@@ -40,6 +40,34 @@ def search(nums: List[int], target: int) -> int:
             right = mid
     return left if nums[left] == target else -1
 
+def search2(nums: List[int], target: int) -> bool:
+    """
+    思路：根据中间数和任意边界的大小确定有序区间
+    理解：中间元素把待搜索区间分成了两部分，两部分具有的性质是至少有一部分是有序的。
+    https://leetcode-cn.com/problems/search-in-rotated-sorted-array/solution/er-fen-fa-python-dai-ma-java-dai-ma-by-liweiwei141/
+    """
+    length = len(nums)
+
+    if length == 0: return -1
+
+    left, right = 0, length - 1
+    while left < right:
+        mid = left + (right - left + 1) // 2
+        #中间元素和右边界比较，使用右中位数
+        if nums[mid] < nums[right]:
+            if nums[mid] <= target <= nums[right]:
+                left = mid
+            else:
+                right = mid - 1
+        else:
+            #mid-1是是为了让收缩条件一致（取中位数保持一致）
+            if nums[left] <= target <= nums[mid-1]:
+                right = mid - 1
+            else:
+                left = mid
+    #后处理
+    return left if nums[left] == target else -1
+
 def main():
     param = [4,5,6,7,0,1,2]
     # param = [2,5,6,0,0,1,2]
