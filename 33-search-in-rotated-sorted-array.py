@@ -11,9 +11,9 @@ def search(nums: List[int], target: int) -> int:
                 left = mid + 1
             elif nums[mid] < nums[right]:
                 right = mid
-            else:
-                #无法区分左右区间，缩小区间right--
-                right -= 1
+            # else:
+                #无法区分左右区间，缩小区间right--，数组元素不重复的时候可以用
+                # right -= 1
         return left
 
     if len(nums) == 0: return -1
