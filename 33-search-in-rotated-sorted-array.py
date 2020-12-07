@@ -44,7 +44,6 @@ def main():
     param = [4,5,6,7,0,1,2]
     # param = [2,5,6,0,0,1,2]
     # param = [1,3]
-    param = [1,1,1,1,1,1,2,1,1,1,1,1]
     ret = search(param, 2)
     print(ret)
 
