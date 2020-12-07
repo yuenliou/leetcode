@@ -9,7 +9,7 @@ def minArray(numbers: List[int]) -> int:
         m = (i + j) // 2
         if numbers[m] > numbers[j]: i = m + 1
         elif numbers[m] < numbers[j]: j = m
-        else: j -= 1
+        else: j -= 1 # 最终的i不一定是旋转点
     return numbers[i]
 
 def minArray2(numbers: List[int]) -> int:
