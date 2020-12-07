@@ -9,7 +9,7 @@ def minArray(numbers: List[int]) -> int:
         m = (i + j) // 2
         if numbers[m] > numbers[j]: i = m + 1
         elif numbers[m] < numbers[j]: j = m
-        else: j -= 1
+        # else: j -= 1 #数组元素不重复，这个可以去掉
     return numbers[i]
 
 def minArray2(numbers: List[int]) -> int:
