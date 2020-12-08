@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 
 def mySqrt(x: int) -> int:
+    #特殊情况判断
     if x == 0: return 0
     left, right = 1, x
     while left < right:
         mid = left + (right - left + 1) // 2
-        if mid > x // mid:
+        if mid > x // mid: #mid * mid溢出
             right = mid - 1
         else:
             left = mid
