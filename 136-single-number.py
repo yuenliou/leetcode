@@ -1,19 +1,24 @@
 #!/usr/local/bin/python3.7
 # -*- coding: utf-8 -*-
 from typing import List
+from functools import reduce
 
 def singleNumber(nums: List[int]) -> int:
     """
     思路：排序，哈希，位运算(异或) 0^1 = 1, 1^1 = 0
     """
-    n = 0
-    for val in nums:
-        n ^=  val
-    return n
+
+    # n = 0
+    # for val in nums:
+    #     n ^=  val
+    # return n
+
+    return reduce(lambda x, y: x ^ y, nums)
+
 
 def main():
-    param = [2,2,1]
-    # param = [4,1,2,1,2]
+    # param = [2,2,1]
+    param = [4,1,2,1,2]
     ret = singleNumber(param)
     print(ret)
 
