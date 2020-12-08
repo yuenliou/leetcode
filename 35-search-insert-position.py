@@ -3,7 +3,10 @@
 from typing import List
 
 def searchInsert(nums: List[int], target: int) -> int:
-    # 二分
+    """
+    写对二分查找不能靠模板，需要理解加练习 （附练习题，持续更新）
+    https://leetcode-cn.com/problems/search-insert-position/solution/te-bie-hao-yong-de-er-fen-cha-fa-fa-mo-ban-python-/
+    """
     n = len(nums)
     i, j = 0, n - 1
     while i <= j:
