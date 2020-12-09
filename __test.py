@@ -10,6 +10,26 @@ import heapq
 #https://docs.python.org/zh-cn/3.7/library/collections.html
 from collections import ChainMap, namedtuple, deque, Counter, OrderedDict, defaultdict, UserDict, UserList, UserString
 
+def maxAndMin():
+    """
+    python2： import sys
+    max_value = sys.maxint
+    min_value = -sys.maxint - 1
+
+    python3：import sys
+    max_value = sys.maxsize
+    min_value = -sys.maxsize - 1
+
+    py2和py3通用
+    max_value = float('inf')
+    min_value = float('-inf')
+    """
+
+    max_value = sys.maxsize
+    min_value = -sys.maxsize - 1
+    print(max_value)
+    print(min_value)
+
 def timestamp():
     print(int(time.time()))
     print(int(time.time() * 1000))
@@ -122,7 +142,9 @@ def foreachList():
 
 def main():
     # foreachList()
-    comprehension()
+    # comprehension()
+    # timestamp()
+    maxAndMin()
 
 if __name__ == '__main__':
     main()
