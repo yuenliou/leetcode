@@ -8,6 +8,17 @@ class Solution:
         if n < 2: return n
         return self.fib(n - 1) + self.fib(n - 2)
 
+    def fib0(self, n: int) -> int:
+        """递归超时，尾递归"""
+        def fib_tail(n, a, b):
+            if n < 2: return n
+            if n == 2:
+                return a + b
+            else:
+                return fib_tail(n-1, b, a+b)
+
+        return fib_tail(n, 0, 1)
+
     def fib1(self, n: int) -> int:
         """递归超时，记忆化递归实现(数组/哈希表)"""
         def fibonacci(n, memo):
@@ -54,6 +65,8 @@ class Solution:
 def main():
     param = 30
     solution = Solution()
+    ret = solution.fib0(param)
+    print(ret) #明显卡顿
     ret = solution.fib1(param)
     print(ret)
     ret = solution.fib2(param)
