@@ -1,12 +1,14 @@
 #!/usr/local/bin/python3.7
 # -*- coding: utf-8 -*-
 
-def algFunc(param):
-    pass
+class Solution:
+    def algFunc(self, param):
+        pass
 
 def main():
     param = [2, 7, 11, 15]
-    ret = algFunc(param)
+    solution = Solution()
+    ret = solution.algFunc(param)
     print(ret)
 
 '''0
