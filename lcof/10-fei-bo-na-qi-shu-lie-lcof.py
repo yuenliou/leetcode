@@ -1,8 +1,11 @@
 #!/usr/local/bin/python3.7
 # -*- coding: utf-8 -*-
+import functools
 
 class Solution:
 
+    # 这里加了缓存装饰器！！！
+    @functools.lru_cache(100)
     def fib(self, n: int) -> int:
         """0、1、1、2、3、5、8、13、21..."""
         if n < 2: return n
@@ -65,10 +68,12 @@ class Solution:
 def main():
     param = 30
     solution = Solution()
+    ret = solution.fib(param)
+    print(ret) #明显卡顿
     ret = solution.fib0(param)
     print(ret) #明显卡顿
     ret = solution.fib1(param)
-    print(ret)
+    print(ret) #明显卡顿
     ret = solution.fib2(param)
     print(ret)
     ret = solution.fib3(param)
