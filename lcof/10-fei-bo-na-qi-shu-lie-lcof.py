@@ -27,7 +27,7 @@ class Solution:
         def fibonacci(n, memo):
             # nonlocal memo
             if n < 2: return n
-            if memo[0] != -1:
+            if memo[n] != -1:
                 return memo[n]
             else:
                 memo[n] = fibonacci(n-1, memo) + fibonacci(n-2, memo)
