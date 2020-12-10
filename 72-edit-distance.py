@@ -42,14 +42,17 @@ class Solution:
         """
         n1 = len(word1)
         n2 = len(word2)
+        # +1兼容空字符串，否则要单独处理
         dp = [[0] * (n2 + 1) for _ in range(n1 + 1)]
 
         # 第一行
         for j in range(1, n2 + 1):
-            dp[0][j] = dp[0][j - 1] + 1
+            # dp[0][j] = dp[0][j - 1] + 1
+            dp[0][j] = j
         # 第一列
         for i in range(1, n1 + 1):
-            dp[i][0] = dp[i - 1][0] + 1
+            # dp[i][0] = dp[i - 1][0] + 1
+            dp[i][0] = i
 
         for i in range(1, n1 + 1):
             for j in range(1, n2 + 1):
@@ -57,8 +60,35 @@ class Solution:
                     dp[i][j] = dp[i - 1][j - 1]
                 else:
                     dp[i][j] = min(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1]) + 1
-        # print(dp)
+        print(dp)
         return dp[n1][n2]
+
+    def minDistance2(self, word1: str, word2: str) -> int:
+        """状态转移方程2：优化一维数组+pre，dp[i] = min(dp[i-1], dp[i], pre) + 1
+        """
+        n1 = len(word1)
+        n2 = len(word2)
+        dp = [0] * (n2 + 1)
+
+        # 第一行
+        for i in range(1, n2 + 1): dp[i] = i
+
+        for i in range(1, n1 + 1):
+            # i-1,j-1
+            temp = dp[0]
+            # 第一列 i-1
+            dp[0] = i
+            for j in range(1, n2 + 1):
+                # pre 来时刻保存 (i-1,j-1) 的值
+                pre = temp
+                temp = dp[j]
+                if word1[i - 1] == word2[j - 1]:
+                    dp[j] = pre
+                else:
+                    dp[j] = min(dp[j - 1], dp[j], pre) + 1
+            print(dp)
+        # print(dp)
+        return dp[n2]
 
 def main():
     param =  "horse"
@@ -67,6 +97,8 @@ def main():
     ret = solution.minDistance(param, param2)
     print(ret)
     ret = solution.minDistance1(param, param2)
+    print(ret)
+    ret = solution.minDistance2(param, param2)
     print(ret)
 
 '''72. 编辑距离
