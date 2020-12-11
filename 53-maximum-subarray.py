@@ -26,20 +26,17 @@ class Solution:
         n = len(nums)
         if n <= 0: return 0
         # 初始状态
-        dp = nums
-        #默认第一个数字
-        ans = dp[0]
+        ans = pre = nums[0]
         # 状态转移
         for i in range(1, n):
-            dp[i] = max(dp[i], dp[i-1] + nums[i])
-            # ans = max(dp)
-            ans = max(ans, dp[i])
-        print(dp)
+            # print(pre)
+            pre = max(nums[i], pre + nums[i])
+            ans = max(ans, pre)
         return ans
 
 def main():
     param = [-2,1,-3,4,-1,2,1,-5,4]
-    param = [-2,-3,-1,-5]
+    # param = [-2,-3,-1,-5]
     solution = Solution()
     ret = solution.maxSubArray(param)
     print(ret)
