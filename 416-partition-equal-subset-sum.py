@@ -34,7 +34,7 @@ class Solution:
     def canPartition1(self, nums: List[int]) -> bool:
         """状态转移方程：
         0-1背包优化：dp[j] = max(dp[j], dp[j-w[j]]+v[j]) // 逆序枚举：状态有两个(v,w)，第i个物品依赖i-1的状态(顺序的话，当前数组前面的状态是加入i之后的状态)
-        完全背包优化：dp[j] = max(dp[j], dp[j-w[j]]+v[j]) // 顺序枚举
+        完全背包优化：dp[j] = max(dp[j], dp[j-w[j]]+v[j]) // 顺序枚举：直接符合
         dp[[j] = x 表示，当前背包的容量为j时，若x为true，则说明可以恰好将背包装满，若x为false，则说明不能恰好将背包装满。
         """
         N = len(nums)
@@ -46,7 +46,7 @@ class Solution:
         dp = [False] * (W + 1)
         #初始化
         dp[0] = True
-        #状态转移
+        #状态转移：逆序枚举
         for i in range(0, N):
             for j in range(W, nums[i] - 1, -1):
                 dp[j] = dp[j] | dp[j - nums[i]]
