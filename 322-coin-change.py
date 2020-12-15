@@ -40,6 +40,23 @@ class Solution:
                 # 子问题无解，硬币的面值大于最大值
                 if i - coin < 0: continue
                 dp[i] = min(dp[i], 1 + dp[i - coin])
+        print(dp)
+        return dp[amount] if dp[amount] != float('inf') else -1
+
+    def coinChange2(self, coins: List[int], amount: int) -> int:
+        """两层循环优化:0-1背包状态压缩"""
+        N = len(coins)
+        W = amount
+        #dp定义
+        dp = [float('inf')] * (amount+1)
+        #初始化
+        dp[0] = 0
+        #状态转移(两层循环：当前行第一列的初始状态)
+        for i in range(1, N + 1):
+            for j in range(coins[i - 1], W + 1):
+                # print(i, j, i, j - coins[i - 1])
+                dp[j] = min(dp[j], dp[j - coins[i - 1]] + 1)
+        print(dp)
         return dp[amount] if dp[amount] != float('inf') else -1
 
 def main():
@@ -48,6 +65,8 @@ def main():
     ret = solution.coinChange(param, 11)
     print(ret)
     ret = solution.coinChange1(param, 11)
+    print(ret)
+    ret = solution.coinChange2(param, 11)
     print(ret)
 
 '''322. 零钱兑换
