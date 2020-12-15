@@ -47,9 +47,9 @@ class Solution:
         #初始化
         dp[0] = True
         #状态转移：逆序枚举
-        for i in range(0, N):
-            for j in range(W, nums[i] - 1, -1):
-                dp[j] = dp[j] | dp[j - nums[i]]
+        for i in range(1, N + 1):
+            for j in range(W, nums[i - 1] - 1, -1):
+                dp[j] = dp[j] | dp[j - nums[i - 1]]
         print(dp)
         return dp[W]
 
