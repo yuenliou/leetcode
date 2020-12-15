@@ -75,9 +75,9 @@ class Solution:
                 dp[i][j] = max(dp[i-1][j], dp[i-1][j-k*w[i-1]] + v[i-1]*k)
         ```
         ```
-        #多重背包两层循环
+        #多重背包两层循环：同0-1背包 必须逆向枚举!!!
         for i in range(1, N+1):
-            for j in range(1, min(W, M[i])+1):
+            for j in range(min(W, M[i]), w[i-1], -1):
                 #j表示剩余可用容量，w[i-1]表示第i个物品重量
                 if j >= w[i-1]:
                     #当前物品价值 + 取当前物品后的剩余空间
@@ -87,9 +87,9 @@ class Solution:
                     dp[i][j] = dp[i-1][j]
         ```
         #优化空间[时间已最优]：状态压缩:一维数组
-        #多重背包两层循环(顺序枚举)：i依赖i-1(当前行)
+        #多重背包两层循环(逆向枚举)：i依赖i-1(当前行)
         for i in range(1, N+1):
-            for j in range(w[i-1], min(W, M[i])):
+            for j in range(min(W, M[i])，w[i-1]， -1):
                 dp[j] = max(dp[j], dp[j-w[i-1]]+v[i-1])
         ```
         """
