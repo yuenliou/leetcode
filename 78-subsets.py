@@ -7,20 +7,20 @@ class Solution:
         """
         题解：https://leetcode-cn.com/problems/subsets/solution/c-zong-jie-liao-hui-su-wen-ti-lei-xing-dai-ni-gao-/
         """
-        def backtrack(nums, size, path, start):
+        def backtrack(nums, size, start, path):
             #结束条件:无
             res.append(path[:])
             for i in range(start, size):
                 # 做选择
                 path.append(nums[i])
                 # 进入下一行决策
-                backtrack(nums, size, path, i + 1)
+                backtrack(nums, size, i + 1, path)
                 # 撤销选择
                 path.pop()
 
         res = []
         size = len(nums)
-        backtrack(nums, size, [], 0)
+        backtrack(nums, size, 0, [])
         return res
 
     def subsets1(self, nums: List[int]) -> List[List[int]]:
