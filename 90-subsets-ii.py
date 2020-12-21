@@ -41,6 +41,20 @@ class Solution:
                 ans.append(num)
         return ans
 
+    def subsetsWithDup3(self, nums: List[int]) -> List[List[int]]:
+        """二进制计数： """
+        res = []
+
+        # 2 ** len = 8
+        n =  1 << len(nums)
+        for i in range(n):
+            path = []
+            for j in range(n):
+                if i & 1 == 1:
+                    path.append(nums[j])
+                i = i >> 1
+            res.append(path)
+        return res
 
 def main():
     param = [1,2,2]
@@ -49,6 +63,9 @@ def main():
     print(ret)
     param = [1,2,3]
     ret = solution.subsetsWithDup2(param)
+    print(ret)
+    param = [1,2,3]
+    ret = solution.subsetsWithDup3(param)
     print(ret)
 
 '''90. 子集 II
