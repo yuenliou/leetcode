@@ -44,11 +44,46 @@ class Solution:
         dfs(0, [])
         return res
 
+    def permuteUnique1(self, nums: List[int]) -> List[List[int]]:
+        def dfs(track):
+            if len(track) == size:
+                res.append(track[:])
+                return
+
+            for i in range(size):
+                # 排序去重：not used[i - 1]保证每次都是拿从左往右第一个未被填过的数字
+                if i > 0 and nums[i] == nums[i - 1] and not used[i - 1]: continue
+                if used[i]: continue
+                #状态变量
+                used[i] = True
+                #选择
+                track.append(nums[i])
+                #进入下一层决策树
+                dfs(track)
+                #状态重置
+                used[i] = False
+                #取消选择
+                track.pop()
+
+        size = len(nums)
+        if len(nums) == 0:
+            return []
+
+        used = [False for _ in range(size)]
+        res = []
+        #排序进行去重
+        nums.sort()
+        #利用py语言特性，减少参数传递 vs 46题
+        dfs([])
+        return res
 
 def main():
     param = [1, 2, 2]
     solution = Solution()
     ret = solution.permuteUnique(param)
+    print(ret)
+    param = [1, 2, 3]
+    ret = solution.permuteUnique1(param)
     print(ret)
 
 '''47. 全排列 II
