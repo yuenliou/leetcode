@@ -11,7 +11,7 @@ class Solution:
         回溯算法详解框架：决策树：路径+选择(撤销)+结束
         https://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247484709&idx=1&sn=1c24a5c41a5a255000532e83f38f2ce4&chksm=9bd7fb2daca0723be888b30345e2c5e64649fc31a00b05c27a0843f349e2dd9363338d0dac61&scene=21#wechat_redirect
         """
-        def dfs(nums, size, depth, path, used, res):
+        def dfs(nums, size, depth, path, used):
             if depth == size:
                 #res.append(path) #拷贝
                 res.append(path[:])
@@ -25,7 +25,7 @@ class Solution:
                     #选择
                     path.append(nums[i])
                     #进入下一层决策树
-                    dfs(nums, size, depth + 1, path, used, res)
+                    dfs(nums, size, depth + 1, path, used)
                     #状态重置
                     used[i] = False
                     #取消选择
@@ -37,7 +37,7 @@ class Solution:
 
         used = [False for _ in range(size)]
         res = []
-        dfs(nums, size, 0, [], used, res)
+        dfs(nums, size, 0, [], used)
         return res
 
     def permute1(self, nums: List[int]) -> List[List[int]]:
@@ -58,7 +58,7 @@ class Solution:
         return res
 
     def permute3(self, nums: List[int]) -> List[List[int]]:
-        def dfs(nums, size, depth, path, state, res):
+        def dfs(nums, size, depth, path, state):
             if depth == size:
                 res.append(path)
                 return
@@ -68,7 +68,7 @@ class Solution:
 
                 if ((state >> i) & 1) == 0:
                     # print(state, i)
-                    dfs(nums, size, depth + 1, path + [nums[i]], state ^ (1 << i), res)
+                    dfs(nums, size, depth + 1, path + [nums[i]], state ^ (1 << i))
 
         size = len(nums)
         if size == 0:
@@ -76,7 +76,29 @@ class Solution:
 
         state = 0
         res = []
-        dfs(nums, size, 0, [], state, res)
+        dfs(nums, size, 0, [], state)
+        return res
+
+    def permute4(self, nums):
+        """
+        基于交换动态维护数组
+        https://leetcode-cn.com/problems/permutations/solution/quan-pai-lie-by-leetcode-solution-2/
+        """
+        def backtrack(first=0):
+            # 所有数都填完了
+            if first == n:
+                res.append(nums[:])
+            for i in range(first, n):
+                # 动态维护数组
+                nums[first], nums[i] = nums[i], nums[first]
+                # 继续递归填下一个数
+                backtrack(first + 1)
+                # 撤销操作
+                nums[first], nums[i] = nums[i], nums[first]
+
+        n = len(nums)
+        res = []
+        backtrack()
         return res
 
 def main():
@@ -89,6 +111,8 @@ def main():
     ret = solution.permute2(param)
     print(ret)
     ret = solution.permute3(param)
+    print(ret)
+    ret = solution.permute4(param)
     print(ret)
 
 '''46. 全排列
