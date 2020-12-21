@@ -7,7 +7,7 @@ class Solution:
         """k 限制了树的高度，n 限制了树的宽度。
         https://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247485007&idx=1&sn=ceb42ba2f341af34953d158358c61f7c&chksm=9bd7f847aca071517fe0889d2679ead78b40caf6978ebc1d3d8355d6693acc7ec3aca60823f0&scene=21#wechat_redirect
         """
-        def backtrack(n, k, start, track):
+        def backtrack(start, track):
             #结束条件:到大树的底部
             if len(track) == k:
                 return res.append(track[:])
@@ -16,13 +16,13 @@ class Solution:
                 # 做选择
                 track.append(i)
                 # 进入下一行决策
-                backtrack(n, k, i + 1, track)
+                backtrack(i + 1, track)
                 # 撤销选择
                 track.pop()
 
         res = []
         if n <= 0 or k <= 0: return []
-        backtrack(n, k, 1, [])
+        backtrack(1, [])
         return res
 
 def main():
