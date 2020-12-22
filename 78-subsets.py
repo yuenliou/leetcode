@@ -75,7 +75,7 @@ class Solution:
         return res
 
     def subsets4(self, nums: List[int]) -> List[List[int]]:
-        """二进制递归枚举： """
+        """二进制递归枚举：https://leetcode-cn.com/problems/subsets/solution/er-jin-zhi-wei-zhu-ge-mei-ju-dfssan-chong-si-lu-9c/ """
         def backtrack(cur, path):
             # 终止返回结果
             if cur == len(nums): return res.append(path[:])
