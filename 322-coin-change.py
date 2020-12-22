@@ -48,7 +48,7 @@ class Solution:
         N = len(coins)
         W = amount
         #dp定义
-        dp = [float('inf')] * (amount+1)
+        dp = [float('inf')] * (W+1)
         #初始化
         dp[0] = 0
         #状态转移(两层循环：当前行第一列的初始状态)
@@ -57,7 +57,7 @@ class Solution:
                 # print(i, j, i, j - coins[i - 1])
                 dp[j] = min(dp[j], dp[j - coins[i - 1]] + 1)
         print(dp)
-        return dp[amount] if dp[amount] != float('inf') else -1
+        return dp[W] if dp[W] != float('inf') else -1
 
 def main():
     param = [1, 2, 5]
