@@ -22,14 +22,69 @@ class Solution:
         for i in range(1, N + 1):
             for j in range(W, nums[i - 1] - 1, -1):
                 dp[j] = dp[j] + dp[j - nums[i - 1]]
-            print(dp)
-        # print(dp)
+            # print(dp)
+        print(dp)
         return dp[W]
+
+    def findTargetSumWays1(self, nums: List[int], S: int) -> int:
+        """回溯算法：二进制递归枚举"""
+        def backtrack(i, rest):
+            nonlocal res
+            # 终止返回结果：恰好凑出 target
+            if i == len(nums):
+                if rest == 0:
+                    res += 1
+                return
+
+            # 给 nums[i] 选择 - 号
+            rest += nums[i]
+            # 穷举 nums[i + 1]
+            backtrack(i + 1, rest)
+            # 撤销选择
+            rest -= nums[i]
+
+            # 给 nums[i] 选择 + 号
+            rest -= nums[i]
+            # 穷举 nums[i + 1]
+            backtrack(i + 1, rest)
+            # 撤销选择
+            rest += nums[i]
+
+        res = 0
+        backtrack(0, S)
+        return res
+
+    def findTargetSumWays2(self, nums: List[int], S: int) -> int:
+        """回溯算法：二进制递归枚举，优化消除重叠子问题
+        https://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247485700&idx=1&sn=433fc5ec5e03a86064d458320332a688&chksm=9bd7f70caca07e1aad658333ac05df501796862a418d8f856b12bb6ca73a924552901ec86d9b&scene=21#wechat_redirect
+        """
+        def backtrack(i, rest):
+            nonlocal res
+            # 终止返回结果：恰好凑出 target
+            if i == len(nums):
+                return 1 if rest == 0 else 0
+            # 查备忘录
+            key = "{},{}".format(i, rest)
+            if key in memo: return memo[key]
+            # 穷举
+            res = backtrack(i + 1, rest - nums[i]) + backtrack(i + 1, rest + nums[i])
+            # 记入备忘录
+            memo[key] = res
+            return res
+
+        res = 0
+        memo = {}
+        backtrack(0, S)
+        return res
 
 def main():
     param = [1, 1, 1, 1, 1]
     solution = Solution()
     ret = solution.findTargetSumWays(param, 3)
+    print(ret)
+    ret = solution.findTargetSumWays1(param, 3)
+    print(ret)
+    ret = solution.findTargetSumWays2(param, 3)
     print(ret)
 
 '''494. 目标和
