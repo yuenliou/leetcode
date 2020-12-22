@@ -25,47 +25,10 @@ class Solution:
         backtrack( 0, [])
         return res
 
-    def subsetsWithDup2(self, nums: List[int]) -> List[List[int]]:
-        """数学归纳：https://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247485007&idx=1&sn=ceb42ba2f341af34953d158358c61f7c&chksm=9bd7f847aca071517fe0889d2679ead78b40caf6978ebc1d3d8355d6693acc7ec3aca60823f0&scene=21#wechat_redirect"""
-        res = [[]]
-        for i in nums:
-            # print([[i] + j for j in res])
-            res = res + [[i] + j for j in res]
-
-        # return res
-
-        ans = [[]]
-        # 去重
-        for num in res:
-            if num not in ans:
-                ans.append(num)
-        return ans
-
-    def subsetsWithDup3(self, nums: List[int]) -> List[List[int]]:
-        """二进制计数： """
-        res = []
-
-        # 2 ** len = 8
-        n =  1 << len(nums)
-        for i in range(n):
-            path = []
-            for j in range(n):
-                if i & 1 == 1:
-                    path.append(nums[j])
-                i = i >> 1
-            res.append(path)
-        return res
-
 def main():
     param = [1,2,2]
     solution = Solution()
     ret = solution.subsetsWithDup(param)
-    print(ret)
-    param = [1,2,3]
-    ret = solution.subsetsWithDup2(param)
-    print(ret)
-    param = [1,2,3]
-    ret = solution.subsetsWithDup3(param)
     print(ret)
 
 '''90. 子集 II
