@@ -19,24 +19,8 @@ class Solution:
 
     def getLeastNumbers2(self, arr: List[int], k: int) -> List[int]:
         """分区函数"""
-
-        def partition(arr, left, right):
-            """经典分区：遍历数组元素，将小于 pivot 的元素放到左边，将大于 pivot 的元素放到右边"""
-            if left >= len(arr) or right >= len(arr): return len(arr)
-
-            pivot = right  # 右边为分区点
-            j = left
-            for i in range(left, right):
-                if arr[i] < arr[pivot]:  # >降序
-                    arr[i], arr[j] = arr[j], arr[i]
-                    j += 1
-            # 最后交换基准数与指针停留位置(piovt在右边不用-1)
-            arr[pivot], arr[j] = arr[j], arr[pivot]
-            return j
-
-        def partition2(arr, pivot, left, right):
+        def partition(arr, pivot, left, right):
             """双指针分区"""
-            if left >= len(arr) or right >= len(arr): return len(arr)
             i = left
             j = right
             pivotVal = arr[pivot]
@@ -55,10 +39,9 @@ class Solution:
             return i
 
         def randomPartition(arr, left, right):
-            i = random.randint(1, right)
+            i = random.randint(left, right)
             arr[right], arr[i] = arr[i], arr[right]
-            return partition(arr, left, right)
-
+            return partition(arr, left, left, right)
 
         def findKthBase(left, right) -> int:
             pivotIndex = randomPartition(arr, left, right)
@@ -68,11 +51,11 @@ class Solution:
                 return findKthBase(pivotIndex + 1, right)
             return pivotIndex
 
+        if k >= len(arr): return arr
         return arr[:findKthBase(0, len(arr)-1)]
 
 def main():
     param = [3,2,1]
-    # param = [0,1,2,1]
     param2 = 2
     solution = Solution()
     ret = solution.getLeastNumbers(param, param2)
@@ -81,6 +64,8 @@ def main():
     print(ret)
     # param = [0, 0, 2, 3, 2, 1, 1, 2, 0, 4]
     # param2 = 10
+    # param = [0,1,2,1]
+    # param2 = 1
     ret = solution.getLeastNumbers2(param, param2)
     print(ret)
 
