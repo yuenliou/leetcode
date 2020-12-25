@@ -16,7 +16,7 @@ class Solution:
         return ' '
 
     def firstUniqChar1(self, s: str) -> str:
-        """字典"""
+        """字典： Map 结构的 Value 使用 Boolean 类型， 1.简化判断，2去除int的递增"""
         dic = {}
         for c in s:
             dic[c] = not c in dic
