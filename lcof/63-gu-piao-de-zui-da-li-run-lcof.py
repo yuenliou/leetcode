@@ -37,8 +37,7 @@ class Solution:
     def maxProfit2(self, prices: List[int]) -> int:
         """
         贪心思想：固定卖出时间
-        定义diff[i]为卖出价是数组中第i个数字的最大利润，显然找出i-1中的最小值就可以了
-
+        动态规划：dp[i]为卖出价是数组中第i个数字的最大利润，显然找出i-1中的最小值就可以了
         """
         size = len(prices)
         if size <= 0: return 0
