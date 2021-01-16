@@ -4,6 +4,11 @@ from typing import List
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
+        """
+        贪心思想：固定了买入时间 vs 固定卖出时间
+        动态规划：dp[i]为卖出价是数组中第i个数字的最大利润，显然找出i-1中的最小值就可以了
+        https://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247484509&idx=1&sn=21ace57f19d996d46e82bd7d806a2e3c&source=41#wechat_redirect
+        """
         size = len(prices)
         if size <= 0: return 0
 
