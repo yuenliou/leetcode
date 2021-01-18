@@ -69,13 +69,14 @@ class Solution:
 
         #基本情况：
         dp_i_0 = 0
-        dp_i_1 = float('-inf')
+        dp_i_1 = -prices[0]
         dp_pre_0 = 0 #dp[i - 2][0]
 
         for i in range(1, size):
             # 本题优化方程：dp_i_0表示含第i天的卖出价，dp_i_1表示不含第i天的买入价
             new_dp_i_0 = max(dp_i_0, dp_i_1 + prices[i])
-            new_dp_i_1 = max(dp_i_1, dp_i_0 - prices[i])
+            new_dp_i_1 = max(dp_i_1, dp_pre_0 - prices[i])
+            dp_pre_0 = dp_i_0
             dp_i_0 = new_dp_i_0
             dp_i_1 = new_dp_i_1
         return dp_i_0
