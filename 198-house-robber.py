@@ -4,7 +4,9 @@ from typing import List
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        """模拟：奇偶和最大"""
+        """模拟：奇偶和最大
+        https://leetcode-cn.com/problems/house-robber/solution/da-jia-jie-she-by-ikaruga/
+        """
         odd_sum = even_sum = 0
         for i in range(len(nums)):
             if i % 2:
@@ -24,16 +26,34 @@ class Solution:
         if size <= 0: return 0
 
         #初始化
-        dp = [0] * size
+        dp = [0] * (size + 1)
 
         #基本情况：
-        dp[0] = nums[0]
+        dp[0] = 0
+        dp[1] = nums[0]
 
-        for i in range(1, size):
+        for i in range(2, size + 1):
             # 状态转移方程
-            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])
+            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i - 1])
         # print(dp)
-        return dp[size-1]
+        return dp[size]
+
+    def rob2(self, nums: List[int]) -> int:
+        """动态规划空间优化"""
+        size = len(nums)
+        if size <= 0: return 0
+
+        #基本情况：
+        pre0 = 0
+        pre = nums[0]
+        curr = 0
+
+        for i in range(2, size + 1):
+            # 状态转移方程
+            curr = max(pre, pre0 + nums[i - 1])
+            pre0 = pre
+            pre = curr
+        return curr
 
 def main():
     param = [1,2,3,1]
@@ -43,6 +63,8 @@ def main():
     ret = solution.rob(param)
     print(ret)
     ret = solution.rob1(param)
+    print(ret)
+    ret = solution.rob2(param)
     print(ret)
 
 '''198. 打家劫舍
