@@ -98,7 +98,8 @@ class Solution:
             dp[0][j][1] = -prices[0]
 
         for i in range(1, size):
-            # 本题优化方程：k=inf，枚举k，注意k--，k++都可以
+            # 本题优化方程：k=inf，枚举k，注意k--，k++都可以，因为使用的是i-1的值，
+            # 情况必须从大到小的原因是：使用O(k)的空间复杂度实现时避免使用临时变量，参考题123
             for j in range(k, 0, -1):
                 dp[i][j][0] = max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i])
                 dp[i][j][1] = max(dp[i - 1][j][1], dp[i - 1][j - 1][0] - prices[i])
