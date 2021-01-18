@@ -113,10 +113,9 @@ class Solution:
 
         for i in range(1, size):
             # 本题优化方程：dp_i_0表示含第i天的卖出价，dp_i_1表示不含第i天的买入价
-            new_dp_i_0 = max(dp_i_0, dp_i_1 + prices[i])
-            new_dp_i_1 = max(dp_i_1, dp_i_0 - prices[i])
-            dp_i_0 = new_dp_i_0
-            dp_i_1 = new_dp_i_1
+            tmp = dp_i_0
+            dp_i_0 = max(dp_i_0, dp_i_1 + prices[i])
+            dp_i_1 = max(dp_i_1, tmp - prices[i])
         return dp_i_0
 
 def main():
