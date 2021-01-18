@@ -113,7 +113,7 @@ class Solution:
 
         for i in range(1, size):
             # 本题优化方程：dp_i_0表示含第i天的卖出价，dp_i_1表示不含第i天的买入价
-            tmp = dp_i_0
+            tmp = dp_i_0 #注意i是从0开始
             dp_i_0 = max(dp_i_0, dp_i_1 + prices[i])
             dp_i_1 = max(dp_i_1, tmp - prices[i])
         return dp_i_0
