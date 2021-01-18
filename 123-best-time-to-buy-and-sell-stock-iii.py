@@ -28,7 +28,7 @@ class Solution:
 
         return dp(0, k)
 
-    def maxProfit_dp(self, prices: List[int]) -> int:
+    def maxProfit_dp(self, k: int, prices: List[int]) -> int:
         """
         动态规划：三个操作状态buy, sell, rest。
         通用状态转移方程：s[0,1]两种(有无股票)状态的两种情况，昨天的股票持有状态和今天的操作影响今天的收益情况
@@ -50,33 +50,42 @@ class Solution:
         if size <= 0: return 0
 
         #初始化
-        dp = [[0] * 2 for _ in range(size)]
+        dp = [[[0] * 2 for _ in range(3)]for _ in range(size)]
 
         #基本情况：
-        dp[0][0] = 0
-        dp[0][1] = -prices[0]
+        dp[0][1][0] = 0
+        dp[0][1][1] = -prices[0]
+        dp[0][2][0] = 0
+        dp[0][2][1] = -prices[0]
 
         for i in range(1, size):
-            # 本题优化方程：k=1
-            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i])
-            dp[i][1] = max(dp[i - 1][1], - prices[i])
+            # 本题优化方程：k=2,穷举4种情况,也可用for参考188题
+            dp[i][2][0] = max(dp[i - 1][2][0], dp[i - 1][2][1] + prices[i])
+            dp[i][2][1] = max(dp[i - 1][2][1], dp[i - 1][1][0] - prices[i])
+            dp[i][1][0] = max(dp[i - 1][1][0], dp[i - 1][1][1] + prices[i])
+            dp[i][1][1] = max(dp[i - 1][1][1], dp[i - 1][0][0] - prices[i])
+            # dp[i][1][1] = max(dp[i - 1][1][1], - prices[i])
         # print(dp)
-        return dp[size - 1][0]
+        return dp[size - 1][2][0]
 
-    def maxProfit_dp_s(self, prices: List[int]) -> int:
+    def maxProfit_dp_s(self, k: int, prices: List[int]) -> int:
         """空间优化"""
         size = len(prices)
         if size <= 0: return 0
 
         #基本情况：
-        dp_i_0 = 0
-        dp_i_1 = float('-inf')
+        dp_i_10 = 0
+        dp_i_11 = -prices[0]
+        dp_i_20 = 0
+        dp_i_21 = -prices[0]
 
         for i in range(1, size):
-            # 本题优化方程：dp_i_1表示不含第i天的买入价
-            dp_i_0 = max(dp_i_0, dp_i_1 + prices[i])
-            dp_i_1 = max(dp_i_1, - prices[i])
-        return dp_i_0
+            # 本题优化方程：dp_i_0表示含第i天的卖出价，dp_i_1表示不含第i天的买入价
+            dp_i_20 = max(dp_i_20, dp_i_21 + prices[i])
+            dp_i_21 = max(dp_i_21, dp_i_10- prices[i])
+            dp_i_10 = max(dp_i_10, dp_i_11 + prices[i])
+            dp_i_11 = max(dp_i_11, - prices[i])
+        return dp_i_20
 
 def main():
     param = 2
