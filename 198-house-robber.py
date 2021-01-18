@@ -24,6 +24,7 @@ class Solution:
         """
         size = len(nums)
         if size <= 0: return 0
+        if size == 1: return nums[0]
 
         #初始化
         dp = [0] * (size + 1)
@@ -42,6 +43,7 @@ class Solution:
         """动态规划空间优化"""
         size = len(nums)
         if size <= 0: return 0
+        if size == 1: return nums[0]
 
         #基本情况：
         pre0 = 0
