@@ -28,7 +28,7 @@ class Solution:
 
         return dp(0, k)
 
-    def maxProfit_dp(self, prices: List[int]) -> int:
+    def maxProfit_dp(self, k: int, prices: List[int]) -> int:
         """
         动态规划：三个操作状态buy, sell, rest。
         通用状态转移方程：s[0,1]两种(有无股票)状态的两种情况，昨天的股票持有状态和今天的操作影响今天的收益情况
@@ -50,38 +50,66 @@ class Solution:
         if size <= 0: return 0
 
         #初始化
-        dp = [[0] * 2 for _ in range(size)]
+        dp = [[[0] * 2 for _ in range(k + 1)]for _ in range(size)]
 
         #基本情况：
-        dp[0][0] = 0
-        dp[0][1] = -prices[0]
+        for j in range(k + 1):
+            dp[0][j][0] = 0
+            dp[0][j][1] = -prices[0]
 
         for i in range(1, size):
-            # 本题优化方程：k=1
-            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i])
-            dp[i][1] = max(dp[i - 1][1], - prices[i])
+            # 本题优化方程：k=inf，枚举k，注意k--，k++都可以
+            for j in range(1, k + 1):
+                dp[i][j][0] = max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i])
+                dp[i][j][1] = max(dp[i - 1][j][1], dp[i - 1][j - 1][0] - prices[i])
         # print(dp)
-        return dp[size - 1][0]
+        return dp[size - 1][k][0]
 
-    def maxProfit_dp_s(self, prices: List[int]) -> int:
+    def maxProfit_dp_s(self, k: int, prices: List[int]) -> int:
         """空间优化"""
         size = len(prices)
         if size <= 0: return 0
 
+        def maxProfit_dp_inf(prices: List[int]):
+            # 初始化
+            dp = [[0] * 2 for _ in range(size)]
+
+            # 基本情况：
+            dp[0][0] = 0
+            dp[0][1] = -prices[0]
+
+            for i in range(1, size):
+                # 本题优化方程：k=inf
+                dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i])
+                dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i])
+            # print(dp)
+            return dp[size - 1][0]
+
+        #k没有意义拓展成无穷大，同题122
+        if k > size // 2:
+            return maxProfit_dp_inf(prices)
+
+        #初始化
+        dp = [[[0] * 2 for _ in range(k + 1)]for _ in range(size)]
+
         #基本情况：
-        dp_i_0 = 0
-        dp_i_1 = float('-inf')
+        for j in range(k + 1):
+            dp[0][j][0] = 0
+            dp[0][j][1] = -prices[0]
 
         for i in range(1, size):
-            # 本题优化方程：dp_i_1表示不含第i天的买入价
-            dp_i_0 = max(dp_i_0, dp_i_1 + prices[i])
-            dp_i_1 = max(dp_i_1, - prices[i])
-        return dp_i_0
+            # 本题优化方程：k=inf，枚举k，注意k--，k++都可以
+            for j in range(k, 0, -1):
+                dp[i][j][0] = max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i])
+                dp[i][j][1] = max(dp[i - 1][j][1], dp[i - 1][j - 1][0] - prices[i])
+        # print(dp)
+        return dp[size - 1][k][0]
 
 def main():
     param = 2
-    param2 = [7,1,2,3,6,4]
+    # param2 = [7,1,2,3,6,4]
     param2 = [2, 4, 1]
+    # param2 = [3,2,6,5,0,3]
     solution = Solution()
     ret = solution.maxProfit(param, param2)
     print(ret)
