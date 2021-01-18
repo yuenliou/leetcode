@@ -10,11 +10,11 @@ class Solution:
         odd_sum = even_sum = 0
         for i in range(len(nums)):
             if i % 2:
-                even_sum = max(even_sum, odd_sum)
                 odd_sum += nums[i]
-            else:
                 odd_sum = max(even_sum, odd_sum)
+            else:
                 even_sum += nums[i]
+                even_sum = max(even_sum, odd_sum)
         return max(odd_sum, even_sum)
 
     def rob1(self, nums: List[int]) -> int:
