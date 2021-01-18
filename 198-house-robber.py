@@ -4,12 +4,14 @@ from typing import List
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        """模拟：奇偶和最大，部分符合"""
+        """模拟：奇偶和最大"""
         odd_sum = even_sum = 0
         for i in range(len(nums)):
             if i % 2:
+                even_sum = max(even_sum, odd_sum)
                 odd_sum += nums[i]
             else:
+                odd_sum = max(even_sum, odd_sum)
                 even_sum += nums[i]
         return max(odd_sum, even_sum)
 
