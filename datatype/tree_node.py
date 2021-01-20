@@ -1,5 +1,6 @@
 #!/usr/local/bin/python3.7
 # -*- coding: utf-8 -*-
+from collections import deque
 
 # Definition for a binary tree node.
 class TreeNode:
@@ -103,6 +104,23 @@ def post_order_travel(node: TreeNode):
     post_order_travel(node.left)
     post_order_travel(node.right)
     print(node.val)
+
+def level_order_travel(node: TreeNode):
+    """层序遍历"""
+    if not node: return
+    queue = deque()
+    queue.append(node)
+    while len(queue):# isEmpty()
+        # cnt = len(queue); while cnt: ...; cnt -= 1
+        for _ in range(len(queue)):
+            # 右出左进
+            root = queue.pop() # list.pop(0)
+            print(root.val)
+            if root.left:
+                queue.appendleft(root.left)
+            if root.right:
+                queue.appendleft(root.right)
+
 
 def tree_node_test():
     pass
