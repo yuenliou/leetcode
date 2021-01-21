@@ -1,7 +1,7 @@
 #!/usr/local/bin/python3.7
 # -*- coding: utf-8 -*-
 from typing import List
-from datatype.tree_node import TreeNode, pre_order_travel, in_order_travel, post_order_travel, level_order_travel
+from datatype.tree_node import TreeNode, build_binary_tree, level_order_travel
 
 class Solution:
     def pathSum(self, root: TreeNode, targetSum: int) -> List[List[int]]:
@@ -41,25 +41,8 @@ class Solution:
 
 
 def main():
-    root = TreeNode(5)
-    rLeft = TreeNode(4)
-    rRight = TreeNode(8)
 
-    root.setLeftNode(rLeft)
-    root.setRightNode(rRight)
-
-    left = TreeNode(11)
-    left.setLeftNode(TreeNode(7))
-    left.setRightNode(TreeNode(2))
-
-    right = TreeNode(4)
-    right.setLeftNode(TreeNode(5))
-    right.setRightNode(TreeNode(1))
-
-    rLeft.setLeftNode(left)
-    rRight.setLeftNode(TreeNode(13))
-    rRight.setRightNode(right)
-
+    root = build_binary_tree([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1])
     print('-level-')
     level_order_travel(root)
 
