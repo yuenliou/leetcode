@@ -31,9 +31,29 @@ class TreeNode:
     def getParentNode(self):
         return self.parent
 
-def build_tree_node(arr):
-    """构建任意二叉树"""
-    pass
+def build_binary_tree(arr):
+    """构建任意二叉树：层序"""
+    def build(arr):
+        length = len(arr)
+        if length <= 0: return None
+        #根节点
+        root = TreeNode(arr[0])
+        queue = deque()
+        queue.append(root)
+        #一层循环，不同于遍历
+        for i in range(1, length, 2):
+            node = queue.popleft() # 左出右进
+            if arr[i]:
+                left = TreeNode(arr[i])
+                node.setLeftNode(left)
+                queue.append(left) # 左出右进
+            if i + 1 == length: break
+            if arr[i + 1]:
+                right = TreeNode(arr[i + 1])
+                node.setRightNode(right)
+                queue.append(right) # 左出右进
+        return root
+    return build(arr)
 
 def build_bst(arr):
     """
@@ -132,8 +152,9 @@ if __name__ == '__main__':
     # root = build_bst([-10, -3, 0, 5, 9])
     # post_order_travel(root)
     # root = build_bst2([-10, -3, 0, 5, 9])
-    root = build_bst2([0, 5, 9, -3, -10])
-    in_order_travel(root)
+
+    # root = build_bst2([0, 5, 9, -3, -10])
+    # in_order_travel(root)
 
     # root = TreeNode(1)
     # n2 = TreeNode(2)
@@ -141,5 +162,10 @@ if __name__ == '__main__':
     # root.setRightNode(n2)
     # n2.setLeftNode(n3)
     # in_order_travel(root)
+
+    root = build_binary_tree([5,4,8,11,None,13,4,7,2,None,None,5,1])
+    print('-level-')
+    level_order_travel(root)
+
 
 
