@@ -104,26 +104,38 @@ def partition(arr, pivot, left, right):
     # arr[i] = pivotVal
     return i
 
-def pre_order_travel(node: TreeNode):
+def pre_order_travel(root: TreeNode):
     """先序遍历"""
-    if node is None: return
-    print(node.val)
-    pre_order_travel(node.left)
-    pre_order_travel(node.right)
+    def preOrder(node):
+        if node is None: return
+        list.append(node.val)
+        preOrder(node.left)
+        preOrder(node.right)
+    list = []
+    preOrder(root)
+    print('pre-order', list, sep=': ')
 
-def in_order_travel(node: TreeNode):
+def in_order_travel(root: TreeNode):
     """中序遍历"""
-    if node is None: return
-    in_order_travel(node.left)
-    print(node.val)
-    in_order_travel(node.right)
+    def inOrder(node):
+        if node is None: return
+        inOrder(node.left)
+        list.append(node.val)
+        inOrder(node.right)
+    list = []
+    inOrder(root)
+    print('in-order', list, sep=': ')
 
-def post_order_travel(node: TreeNode):
+def post_order_travel(root: TreeNode):
     """后序遍历"""
-    if node is None: return
-    post_order_travel(node.left)
-    post_order_travel(node.right)
-    print(node.val)
+    def postOrder(node):
+        if node is None: return
+        postOrder(node.left)
+        postOrder(node.right)
+        list.append(node.val)
+    list = []
+    postOrder(root)
+    print('post-order', list, sep=': ')
 
 def level_order_travel(node: TreeNode):
     """层序遍历"""
