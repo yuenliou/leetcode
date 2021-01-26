@@ -11,6 +11,7 @@ class Solution:
         queue.append(root)
         res = []
         while len(queue):
+            #不要求"每一层打印到一行"，内层循环可以去掉，参考 题32-ii
             size = len(queue)
             while size > 0:
                 #左出右进
