@@ -49,7 +49,7 @@ class Solution:
         res_left, res_right = 0, float('inf')
         # 增加窗口right
         while right < len(s):
-            if need[s[right]]:
+            if s[right] in need:
                 window[s[right]] += 1
                 if window[s[right]] == need[s[right]]:
                     counter += 1
@@ -59,7 +59,7 @@ class Solution:
                 if right - left < res_right - res_left:
                     res_left, res_right = left, right
 
-                if need[s[left]]:
+                if s[left] in need:
                     window[s[left]] -= 1
                     if window[s[left]] < need[s[left]]:
                         counter -= 1
