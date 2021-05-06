@@ -55,7 +55,7 @@ class Solution:
                     counter += 1
             right += 1
             # 缩小窗口left
-            while counter == len(t):
+            while counter == len(need):
                 if right - left < res_right - res_left:
                     res_left, res_right = left, right
 
