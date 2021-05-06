@@ -113,8 +113,9 @@ def lengthOfLongestSubstring5(s: str) -> int:
     # 增加窗口right
     while right < len(s):
         window[s[right]] += 1
+        # right += 1
         # 缩小窗口left
-        while window[s[right]] > 1:
+        while window[s[right]] > 1: # right - 1
             window[s[left]] -= 1
             left += 1
         right += 1 # 放上面的，第二个 while 中需要 -1 处理
