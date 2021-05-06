@@ -102,6 +102,25 @@ def lengthOfLongestSubstring4(s: str) -> int:
         max_len = max(max_len, end - start)
     return max_len
 
+def lengthOfLongestSubstring5(s: str) -> int:
+    # 经典滑动窗口模板框架
+    if not s: return 0
+    from collections import defaultdict
+    # 使用 window 作为计数器记录窗口中的字符出现次数
+    window = defaultdict(int)
+    left = right = 0
+    res = 0
+    # 增加窗口right
+    while right < len(s):
+        window[s[right]] += 1
+        # 缩小窗口left
+        while window[s[right]] > 1:
+            window[s[left]] -= 1
+            left += 1
+        right += 1 # 放上面的，第二个 while 中需要 -1 处理
+        res = max(res, right - left)
+    return res
+
 def main():
     param = "abcabcbb"
     # param = "bbbbb"
@@ -109,7 +128,7 @@ def main():
     # param = "au"
     # param = " "
     # param = "abba"
-    ret = lengthOfLongestSubstring4(param)
+    ret = lengthOfLongestSubstring5(param)
     print(ret)
 
 '''3. 无重复字符的最长子串
