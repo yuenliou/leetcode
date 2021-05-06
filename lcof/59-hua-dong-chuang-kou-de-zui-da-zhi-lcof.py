@@ -3,6 +3,23 @@
 from typing import List
 import collections
 
+class MonotonicQueue:
+    """单调递减队列：push,pop,max都是O(1)"""
+    def __init__(self):
+        self.deque = collections.deque()
+
+    def push(self, n):
+        while self.deque and self.deque[-1] < n:
+            self.deque.pop()
+        self.deque.append(n)
+
+    def pop(self, n):
+        if self.deque and self.deque[0] == n:
+            self.deque.popleft()
+
+    def max(self):
+        return self.deque[0]
+
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         """维护单调递减队列：窗口滑动添加了元素 nums[j + 1] ，需将 deque 内所有 < nums[j + 1] 的元素删除"""
@@ -39,13 +56,31 @@ class Solution:
                 res.append(deque[0]) # 记录窗口最大值
         return res
 
+    def maxSlidingWindow2(self, nums: List[int], k: int) -> List[int]:
+        """滑动窗口之单调队列：https://leetcode-cn.com/problems/sliding-window-maximum/solution/dan-diao-dui-lie-by-labuladong/"""
+        window = MonotonicQueue()
+        res = []
+        for i in range(len(nums)): # 形成窗口后
+            if i < k - 1: #先填满窗口的前 k - 1
+                window.push(nums[i])
+            else: #窗口向前滑动
+                window.push(nums[i])
+                res.append(window.max())
+                #滑动窗口移动时，左侧的最大元素不在范围内则移除
+                window.pop(nums[i - k + 1])
+        return res
+
 def main():
-    param = [1,3,-1,-3,5,3,6,7]
+    param = [1, 3, -1, -3, 5, 3, 6, 7]
     param2 = 3
+    # param = [-7,-8,7,5,7,1,6,0]
+    # param2 = 4
     solution = Solution()
     ret = solution.maxSlidingWindow(param, param2)
     print(ret)
     ret = solution.maxSlidingWindow1(param, param2)
+    print(ret)
+    ret = solution.maxSlidingWindow2(param, param2)
     print(ret)
 
 '''剑指 Offer 59 - I. 滑动窗口的最大值
