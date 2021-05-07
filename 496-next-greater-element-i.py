@@ -30,19 +30,18 @@ class Solution:
         思路2：单调栈 [2,1,2,4,3]
         作文题：No, it's asking you to take an element in the first array and then find the same element in the second array and then look to the right in the second array to find a greater one. I couldn`t understand this until I looked into some solutions in the discussi
         """
-        res = [0] * len(nums1)
+        res = [-1] * len(nums1)
         stack = []
         map = {}
         # 先处理 nums2，把对应关系存入哈希表
         for i in range(len(nums2)):
             while len(stack) and stack[-1] < nums2[i]:
-                map[stack[-1]] = nums2[i]
-                stack.pop()
+                map[stack.pop()] = nums2[i]
             stack.append(nums2[i])
 
         # 遍历 nums1 得到结果集
         for i in range(len(nums1)):
-            res[i] = map[nums1[i]] if nums1[i] in map else -1
+            if nums1[i] in map: res[i] = map[nums1[i]]
         return res
 
 def main():
@@ -55,7 +54,6 @@ def main():
     print(ret)
     ret = solution.nextGreaterElement(param, param2)
     print(ret)
-
 
 '''496. 下一个更大元素 I
 
