@@ -71,7 +71,7 @@ def build_bst(arr):
     return build(0, len(arr) - 1)
 
 def build_bst2(arr):
-    """上述构建二叉搜索树限制：必须是有序数组"""
+    """上述构建二叉搜索树限制：必须是有序数组 ??? 此处存疑 ???"""
     def build(start, end):
         if start > end: return None
         pivotIndex = partition(arr, start, start, end)
@@ -161,12 +161,20 @@ if __name__ == '__main__':
     # root = build_bst([1, 3, 2])
     # in_order_travel(root)
 
-    # root = build_bst([-10, -3, 0, 5, 9])
-    # post_order_travel(root)
-    # root = build_bst2([-10, -3, 0, 5, 9])
+    root = build_bst([-10, -3, 0, 5, 9])
+    pre_order_travel(root)
+    in_order_travel(root)
+    post_order_travel(root)
 
-    # root = build_bst2([0, 5, 9, -3, -10])
-    # in_order_travel(root)
+    root = build_bst2([-10, -3, 0, 5, 9])
+    pre_order_travel(root)
+    in_order_travel(root)
+    post_order_travel(root)
+
+    root = build_bst2([0, 5, -3, 9, -10])
+    pre_order_travel(root)
+    in_order_travel(root)
+    post_order_travel(root)
 
     # root = TreeNode(1)
     # n2 = TreeNode(2)
@@ -175,9 +183,9 @@ if __name__ == '__main__':
     # n2.setLeftNode(n3)
     # in_order_travel(root)
 
-    root = build_binary_tree([5,4,8,11,None,13,4,7,2,None,None,5,1])
-    print('-level-')
-    level_order_travel(root)
+    # root = build_binary_tree([5,4,8,11,None,13,4,7,2,None,None,5,1])
+    # print('-level-')
+    # level_order_travel(root)
 
 
 
